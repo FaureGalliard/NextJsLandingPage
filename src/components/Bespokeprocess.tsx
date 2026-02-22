@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 interface StepProps {
   number: number;
   title: string;
@@ -26,27 +28,28 @@ function Step({ number, title, description, active = false }: StepProps) {
 export default function BespokeProcess() {
   const steps = [
     {
-      title: 'Consultation & Measurement',
+      title: 'Consulta y Toma de Medidas',
       description:
-        'We discuss your lifestyle, preferences, and occasion. Over 30 measurements are taken to understand your unique posture and build.',
+        'Hablamos sobre tu estilo de vida, preferencias y ocasión. Se toman más de 30 medidas para entender tu postura y constitución únicas.',
       active: true,
     },
     {
-      title: 'Fabric Selection',
+      title: 'Selección de Telas',
       description:
-        'Choose from our curated library of over 5,000 fabrics from world-renowned mills like Loro Piana, Zegna, and Holland & Sherry.',
+        'Elige entre nuestra biblioteca curada de más de 5,000 telas de prestigiosas casas como Loro Piana, Zegna y Holland & Sherry.',
     },
     {
-      title: 'Fittings & Adjustments',
+      title: 'Pruebas y Ajustes',
       description:
-        'A basted fitting allows us to refine the silhouette. We make precise adjustments to ensure the garment moves with you effortlessly.',
+        'Una prueba provisional nos permite refinar la silueta. Realizamos ajustes precisos para que la prenda se mueva contigo sin esfuerzo.',
     },
     {
-      title: 'Final Delivery',
+      title: 'Entrega Final',
       description:
-        'Your finished garment is presented. We ensure every detail is perfect before you take it home.',
+        'Se presenta tu prenda terminada. Nos aseguramos de que cada detalle sea perfecto antes de que te la lleves.',
     },
   ];
+
 
   return (
     <section id="bespoke" className="py-24 bg-white overflow-hidden">
@@ -54,11 +57,11 @@ export default function BespokeProcess() {
         <div className="flex flex-col md:flex-row gap-12 items-center">
           {/* Steps */}
           <div className="w-full md:w-1/2">
-            <h2 className="text-3xl md:text-4xl font-serif mb-8">The Bespoke Journey</h2>
+            <h2 className="text-[#000000] text-3xl md:text-4xl font-serif mb-8">The Bespoke Journey</h2>
 
-            <div className="space-y-8 relative">
+            <div className="space-y-8 relative text-[#000000]">
               {/* Connecting Line */}
-              <div className="absolute left-4 top-4 bottom-4 w-0.5 bg-gray-100" />
+              <div className=" absolute left-4 top-4 bottom-4 w-0.5 bg-gray-100" />
 
               {steps.map((step, index) => (
                 <Step
@@ -85,41 +88,50 @@ export default function BespokeProcess() {
           <div className="w-full md:w-1/2 relative">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-4">
-                <div className="bg-gray-100 h-64 rounded-lg overflow-hidden">
-                  <img
-                    src="https://images.unsplash.com/photo-1598033129183-c4f50c736f10?q=80&w=1000&auto=format&fit=crop"
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                {/* Imagen 1 */}
+                <div className="bg-gray-100 h-48 rounded-lg overflow-hidden mr-4 relative">
+                  <Image
+                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/7149c4fe2a-d0ee99d18e231635efe7.png"
                     alt="Fabric Swatches"
+                    fill
+                    className="object-cover hover:scale-105 transition-transform duration-500"
                   />
                 </div>
-                <div className="bg-gray-100 h-48 rounded-lg overflow-hidden translate-x-4">
-                  <img
-                    src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=1000&auto=format&fit=crop"
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                {/* Imagen 2 */}
+                <div className="bg-gray-100 h-36 rounded-lg overflow-hidden ml-4 relative">
+                  <Image
+                    src="https://i.pinimg.com/736x/fc/46/cc/fc46cc77598b785f441ababf516a8e1b.jpg"
                     alt="Tailoring Chalk"
+                    fill
+                    className="object-cover hover:scale-105 transition-transform duration-500"
                   />
                 </div>
               </div>
-              <div className="space-y-4 pt-12">
-                <div className="bg-gray-100 h-48 rounded-lg overflow-hidden -translate-x-4">
-                  <img
-                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/7149c4fe2a-d0ee99d18e231635efe7.png"
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+              <div className="space-y-4 pt-8">
+                {/* Imagen 3 */}
+                <div className="bg-gray-100 h-36 rounded-lg overflow-hidden -ml-4 relative">
+                  <Image
+                    src="https://i.pinimg.com/1200x/de/ef/3c/deef3c375bac0a835cb363cf8c53047f.jpg"
                     alt="Sewing Machine"
+                    fill
+                    className="object-cover hover:scale-105 transition-transform duration-500"
                   />
                 </div>
-                <div className="bg-gray-100 h-64 rounded-lg overflow-hidden">
-                  <img
-                    src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=1000&auto=format&fit=crop"
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                {/* Imagen 4 */}
+                <div className="bg-gray-100 h-48 rounded-lg overflow-hidden relative">
+                  <Image
+                    src="https://i.pinimg.com/1200x/03/dc/2c/03dc2cf887e7baab513be07d132ce911.jpg"
                     alt="Finished Suit"
+                    fill
+                    className="object-cover hover:scale-105 transition-transform duration-500 object-center"
                   />
                 </div>
               </div>
             </div>
           </div>
+          </div>
         </div>
-      </div>
+      
     </section>
   );
 }

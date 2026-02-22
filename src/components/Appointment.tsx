@@ -118,7 +118,7 @@ export default function Appointment() {
                 <input
                   type="email"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none transition-all"
-                  placeholder="john@example.com"
+                  placeholder="john@ejemplo.com"
                 />
               </div>
 
@@ -127,11 +127,11 @@ export default function Appointment() {
                   <label className="block text-sm font-medium text-gray-700 mb-2">Tipo de Servicio</label>
                   <div className="relative">
                     <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none appearance-none bg-white">
-                      <option>Traje a Medida</option>
-                      <option>Hecho a Medida</option>
-                      <option>Consulta de Boda</option>
-                      <option>Alteraciones</option>
-                      <option>Consulta de Vestuario</option>
+                      <option>Ajustes y Confección a Medida</option>
+                      <option>Transformación y Modernización de Ropa</option>
+                      <option>Alquiler de Ternos</option>
+                      <option>Tintorería y Lavandería</option>
+                      <option>Alteraciones Especiales</option>
                     </select>
                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-700">
                       <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 512 512">

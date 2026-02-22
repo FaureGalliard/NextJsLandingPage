@@ -13,20 +13,20 @@ export default function Philosophy() {
                   alt="Fabric details"
                 />
                 <img
-                  src="https://images.unsplash.com/photo-1559551409-dadc959f76b8?q=80&w=1000&auto=format&fit=crop"
+                  src="https://i.pinimg.com/1200x/79/8e/4b/798e4b023dad68cbab84f1e1b3b72b2a.jpg"
                   className="w-full h-48 object-cover rounded-lg shadow-md"
                   alt="Stitching detail"
                 />
               </div>
               <div className="space-y-4">
                 <img
-                  src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1000&auto=format&fit=crop"
+                  src="https://i.pinimg.com/736x/61/2f/77/612f7726dd9cfe7c07ea10a2c8dbd652.jpg"
                   className="w-full h-48 object-cover rounded-lg shadow-md"
                   alt="Man in suit"
                 />
                 <img
-                  src="https://images.unsplash.com/photo-1617137968427-85924c800a22?q=80&w=1000&auto=format&fit=crop"
-                  className="w-full h-64 object-cover rounded-lg shadow-md"
+                  src="https://i.pinimg.com/1200x/c8/e3/fa/c8e3fabd48c1a139950083e827b07736.jpg"
+                  className="w-full h-64 object-center object-cover rounded-lg shadow-md"
                   alt="Tailor measuring"
                 />
               </div>
@@ -35,37 +35,31 @@ export default function Philosophy() {
 
           {/* Text Content */}
           <div className="order-1 md:order-2">
-            <span className="text-yellow-600 font-medium tracking-widest text-sm uppercase mb-2 block">
-              Our Philosophy
+            <span className="font-inter text-yellow-600 font-medium tracking-widest text-sm uppercase mb-2 block">
+              Nuestra Filosofía
             </span>
-            <h2 className="text-4xl md:text-5xl font-serif mb-6 leading-tight">
-              Precision in every stitch, elegance in every detail.
+            <h2 className="text-[#000000] text-4xl md:text-5xl font-serif mb-6 leading-tight">
+              Precisión en cada puntada, elegancia en cada detalle.
             </h2>
             <p className="text-gray-600 mb-6 leading-relaxed">
-              We believe that a suit is more than just clothing; it is a
-              statement of intent. Our master tailors combine centuries-old
-              techniques with modern silhouettes to create garments that are
-              truly unique to you.
+              Creemos que cada prenda es más que solo ropa; es una declaración de intenciones. Nuestros maestros sastres combinan técnicas con siluetas modernas para realizar ajustes y mejoras que hacen que tu ropa sea verdaderamente única para ti.
             </p>
             <p className="text-gray-600 mb-8 leading-relaxed">
-              From the initial consultation to the final fitting, our bespoke
-              process is designed to be as enjoyable as it is exacting. We
-              source only the finest wools from Italy and England, ensuring your
-              garment stands the test of time.
+                 Desde la consulta inicial hasta la prueba final, nuestro proceso está diseñado para ser tan agradable como minucioso. Solo utilizamos telas de la mejor calidad de Perú, asegurando que tus prendas luzcan impecables y resistan el paso del tiempo.
             </p>
 
             <div className="flex items-center space-x-8 mt-8">
               <div>
-                <h4 className="text-3xl font-serif font-bold">30+</h4>
-                <p className="text-sm text-gray-500 uppercase tracking-wide mt-1">
-                  Years Experience
+                <h4 className=" text-[#000000]  text-3xl font-serif font-bold">20+</h4>
+                <p className="text-sm text-[#000000] uppercase tracking-wide mt-1">
+                  Años de Experiencia
                 </p>
               </div>
               <div className="w-px h-12 bg-gray-200" />
               <div>
-                <h4 className="text-3xl font-serif font-bold">5k+</h4>
-                <p className="text-sm text-gray-500 uppercase tracking-wide mt-1">
-                  Suits Crafted
+                <h4 className="text-[#000000] text-3xl font-serif font-bold">2k+</h4>
+                <p className="text-sm text-[#000000] uppercase tracking-wide mt-1">
+                  Trajes confeccionados
                 </p>
               </div>
             </div>

@@ -10,10 +10,11 @@ export default function Hero() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=2080&auto=format&fit=crop"
-          alt="Master Tailor at work"
+          src="https://i.pinimg.com/736x/6a/8d/0e/6a8d0e5665010b804aabba54c3d18fba.jpg"
+          alt="Sastre"
           fill
-          className="object-cover opacity-90"
+          className="object-cover object-center opacity-90"
+           style={{ objectPosition: 'center 55%' }} // mueve el foco un poco hacia arriba
           priority
         />
         <div className="absolute inset-0 bg-linear-to-r from-black/40 to-transparent" />
@@ -26,25 +27,25 @@ export default function Hero() {
             EST. 1996 LIMA
           </span>
           <h1 className="text-5xl md:text-7xl font-serif font-medium leading-tight mb-6">
-            The Art of <br />
-            <span className="italic">Modern Tailoring.</span>
+            El Arte de <br />
+            <span className="italic">la Sastrería Moderna.</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-200 mb-10 font-light max-w-lg leading-relaxed">
-            Experience the pinnacle of sartorial elegance. Handcrafted suits
-            designed to fit your lifestyle and your silhouette perfectly.
+            Experimenta la cúspide de la elegancia sastrera. Trajes
+            diseñados para adaptarse perfectamente a tu estilo de vida y silueta.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
               href="#appointment"
               className="px-8 py-4 bg-white text-black font-medium rounded-full hover:bg-gray-100 transition-colors text-center min-w-[180px]"
             >
-              Start Your Journey
+              Comienza tu viaje
             </Link>
             <Link
               href="#collections"
               className="px-8 py-4 border border-white text-white font-medium rounded-full hover:bg-white/10 transition-colors text-center min-w-[180px]"
             >
-              View Collection
+              Ver Colección
             </Link>
           </div>
         </div>
