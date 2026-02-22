@@ -57,7 +57,7 @@ export default function BespokeProcess() {
         <div className="flex flex-col md:flex-row gap-12 items-center">
           {/* Steps */}
           <div className="w-full md:w-1/2">
-            <h2 className="text-[#000000] text-3xl md:text-4xl font-serif mb-8">The Bespoke Journey</h2>
+            <h2 className="text-[#000000] text-3xl md:text-4xl font-serif mb-8">El viaje a Medida</h2>
 
             <div className="space-y-8 relative text-[#000000]">
               {/* Connecting Line */}
@@ -79,7 +79,7 @@ export default function BespokeProcess() {
                 href="#appointment"
                 className="bg-black text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-gray-800 transition-all inline-block"
               >
-                Book Your Consultation
+                Reserva tu consulta
               </a>
             </div>
           </div>
