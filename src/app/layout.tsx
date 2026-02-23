@@ -48,7 +48,7 @@ export default function RootLayout({
   );
 }
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sastreria-marcels.vercel.app"), 
+  metadataBase: new URL("https://sastreriamarcels.vercel.app"), 
   verification: {
     google: "3oDfXz27lgptJu7s2CMqmH2f83nNdjIE3RDA__FDtyY", 
   },
@@ -86,14 +86,14 @@ export const metadata: Metadata = {
   },
 
   alternates: {
-     canonical: "https://sastreria-marcels.vercel.app",
+     canonical: "https://sastreriamarcels.vercel.app",
   },
 
   openGraph: {
     title: "Sastrería Marcel's | Confección a Medida en Callao",
     description:
       "Sastrería en Callao especializada en ternos a medida, ajustes y alquiler de trajes. Atención personalizada.",
-    url: "https://sastreria-marcels.vercel.app/",
+    url: "https://sastreriamarcels.vercel.app/",
     siteName: "Sastrería Marcel's",
     locale: "es_PE",
     type: "website",
