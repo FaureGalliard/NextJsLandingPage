@@ -22,7 +22,7 @@ export default function Footer() {
               <span>Sastreria Marcel&apos;s</span>
             </a>
             <p className="text-gray-500 text-sm leading-relaxed mb-6">
-             Confeccionando prendas excepcionales a medida para el caballero moderno desde 1996. Excelencia en cada hilo..
+             Confeccionando prendas excepcionales a medida desde 1996. Excelencia en cada hilo..
             </p>
             <div className="flex space-x-4">
               {/* Instagram */}
