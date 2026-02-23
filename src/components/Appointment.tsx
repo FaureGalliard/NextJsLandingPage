@@ -1,5 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { supabase } from '@/lib/supabaseClient';
 
 interface ContactItemProps {
   icon: React.ReactNode;
@@ -29,6 +31,46 @@ function ContactItem({ icon, title, lines }: ContactItemProps) {
 }
 
 export default function Appointment() {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const form = new FormData(e.currentTarget);
+    const dateValue = form.get('date') as string;
+    const timeValue = form.get('time') as string;
+
+    // Combina fecha + hora en un timestamp ISO para Supabase (columna timestamptz)
+    const appointmentDatetime =
+      dateValue && timeValue
+        ? new Date(`${dateValue}T${timeValue}:00`).toISOString()
+        : null;
+
+    const data = {
+      first_name: form.get('first_name'),
+      last_name: form.get('last_name'),
+      email: form.get('email'),
+      service_type: form.get('service_type'),
+      appointment_datetime: appointmentDatetime,
+      message: form.get('message') || null,
+      created_at: new Date().toISOString(),
+    };
+
+    const { error } = await supabase.from('appointments').insert([data]);
+
+    if (error) {
+      alert('Ocurrio un error al guardar la cita: ' + error.message);
+    } else {
+      alert('Cita guardada! Nos pondremos en contacto pronto.');
+      (e.target as HTMLFormElement).reset();
+    }
+
+    setLoading(false);
+  };
+
+  const today = new Date().toISOString().split('T')[0];
+
   return (
     <section id="appointment" className="py-24 bg-black text-white relative overflow-hidden">
       {/* Background dot pattern */}
@@ -39,7 +81,6 @@ export default function Appointment() {
           backgroundSize: '30px 30px',
         }}
       />
-
       <motion.div
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10"
         initial={{ opacity: 0 }}
@@ -58,11 +99,10 @@ export default function Appointment() {
               consulta privada
             </h2>
             <p className="text-gray-400 mb-8 text-lg font-light leading-relaxed">
-              Experimenta nuestro servicio de primera mano. Ya sea que estés buscando un
-              traje de boda o actualizando tu vestuario empresarial, nuestros maestros sastres
-              están aquí para guiarte.
+              Experimenta nuestro servicio de primera mano. Ya sea que estes buscando un traje
+              de boda o actualizando tu vestuario empresarial, nuestros maestros sastres estan
+              aqui para guiarte.
             </p>
-
             <div className="space-y-6 mt-12">
               <ContactItem
                 icon={
@@ -71,7 +111,7 @@ export default function Appointment() {
                   </svg>
                 }
                 title="Callao"
-                lines={['Av. Los Dominicos 230 ', 'Callao, Codigo Postal 07041']}
+                lines={['Av. Los Dominicos 230', 'Callao, Codigo Postal 07041']}
               />
               <ContactItem
                 icon={
@@ -80,7 +120,7 @@ export default function Appointment() {
                   </svg>
                 }
                 title="Telefono"
-                lines={['+51  935 814 870', 'sastreria.marcels.pe@gmail.com']}
+                lines={['+51 935 814 870', 'sastreria.marcels.pe@gmail.com']}
               />
               <ContactItem
                 icon={
@@ -97,13 +137,16 @@ export default function Appointment() {
           {/* Right Form */}
           <div className="bg-white text-black p-8 md:p-10 rounded-xl shadow-2xl">
             <h3 className="text-2xl font-serif font-bold mb-6">Solicitar Cita</h3>
+            <form onSubmit={handleSubmit}>
 
-            <form onSubmit={(e) => e.preventDefault()}>
+              {/* Nombre + Apellido */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Nombre</label>
                   <input
                     type="text"
+                    name="first_name"
+                    required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none transition-all"
                     placeholder="John"
                   />
@@ -112,30 +155,44 @@ export default function Appointment() {
                   <label className="block text-sm font-medium text-gray-700 mb-2">Apellido</label>
                   <input
                     type="text"
+                    name="last_name"
+                    required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none transition-all"
                     placeholder="Doe"
                   />
                 </div>
               </div>
 
+              {/* Email */}
               <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Correo Electronico
+                </label>
                 <input
                   type="email"
+                  name="email"
+                  required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none transition-all"
                   placeholder="john@ejemplo.com"
                 />
               </div>
 
+              {/* Servicio + Fecha */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Tipo de Servicio</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Tipo de Servicio
+                  </label>
                   <div className="relative">
-                    <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none appearance-none bg-white">
-                      <option>Ajustes y Confección a Medida</option>
-                      <option>Transformación y Modernización de Ropa</option>
+                    <select
+                      name="service_type"
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none appearance-none bg-white"
+                    >
+                      <option>Ajustes y Confeccion a Medida</option>
+                      <option>Transformacion y Modernizacion de Ropa</option>
                       <option>Alquiler de Ternos</option>
-                      <option>Tintorería y Lavandería</option>
+                      <option>Tintoreria y Lavanderia</option>
                       <option>Alteraciones Especiales</option>
                     </select>
                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-700">
@@ -145,34 +202,60 @@ export default function Appointment() {
                     </div>
                   </div>
                 </div>
+
+                {/* Fecha */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Fecha</label>
                   <input
                     type="date"
+                    name="date"
+                    required
+                    min={today}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none transition-all"
                   />
                 </div>
               </div>
 
+              {/* Hora */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Hora de la cita
+                </label>
+                <input
+                  type="time"
+                  name="time"
+                  required
+                  min="09:00"
+                  max="21:00"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none transition-all"
+                />
+                <p className="text-xs text-gray-400 mt-1">
+                  Horario: Lun-Sab 9:00-21:00 &middot; Dom 10:00-16:00
+                </p>
+              </div>
+
+              {/* Mensaje */}
               <div className="mb-8">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Mensaje (Opcional)
                 </label>
                 <textarea
+                  name="message"
                   rows={3}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none transition-all"
-                  placeholder="Cualquier requisito o pregunta específica"
+                  placeholder="Cualquier requisito o pregunta especifica"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-black text-white font-medium py-4 rounded-lg hover:bg-gray-800 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                disabled={loading}
+                className="w-full bg-black text-white font-medium py-4 rounded-lg hover:bg-gray-800 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none"
               >
-                Confirmar Solicitud
+                {loading ? 'Guardando...' : 'Confirmar Solicitud'}
               </button>
               <p className="text-xs text-gray-500 mt-4 text-center">
-                Nos pondremos en contacto contigo para confirmar la hora exacta de tu cita.
+                Nos pondremos en contacto contigo para confirmar tu cita.
               </p>
             </form>
           </div>
