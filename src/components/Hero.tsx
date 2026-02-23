@@ -52,17 +52,12 @@ export default function Hero() {
 
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
-              href="#appointment"
-              className="px-8 py-4 bg-white text-black font-medium rounded-full hover:bg-gray-100 transition-colors text-center min-w-[180px]"
+              href="#bespoke"
+              className="px-8 py-4 bg-white text-black font-medium rounded-full hover:bg-[#dfe1e4] transition-colors text-center min-w-[180px]"
             >
               Comienza tu viaje
             </Link>
-            <Link
-              href="#collections"
-              className="px-8 py-4 border border-white text-white font-medium rounded-full hover:bg-white/10 transition-colors text-center min-w-[180px]"
-            >
-              Ver Colección
-            </Link>
+            
           </div>
         </div>
       </motion.div>
