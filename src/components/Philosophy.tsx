@@ -1,7 +1,17 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 export default function Philosophy() {
   return (
     <section id="philosophy" className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        viewport={{ once: true, amount: 0.3 }}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           {/* Image Grid */}
           <div className="order-2 md:order-1">
@@ -45,12 +55,12 @@ export default function Philosophy() {
               Creemos que cada prenda es más que solo ropa; es una declaración de intenciones. Nuestros maestros sastres combinan técnicas con siluetas modernas para realizar ajustes y mejoras que hacen que tu ropa sea verdaderamente única para ti.
             </p>
             <p className="text-gray-600 mb-8 leading-relaxed">
-                 Desde la consulta inicial hasta la prueba final, nuestro proceso está diseñado para ser tan agradable como minucioso. Solo utilizamos telas de la mejor calidad de Perú, asegurando que tus prendas luzcan impecables y resistan el paso del tiempo.
+              Desde la consulta inicial hasta la prueba final, nuestro proceso está diseñado para ser tan agradable como minucioso. Solo utilizamos telas de la mejor calidad de Perú, asegurando que tus prendas luzcan impecables y resistan el paso del tiempo.
             </p>
 
             <div className="flex items-center space-x-8 mt-8">
               <div>
-                <h4 className=" text-[#000000]  text-3xl font-serif font-bold">20+</h4>
+                <h4 className="text-[#000000] text-3xl font-serif font-bold">20+</h4>
                 <p className="text-sm text-[#000000] uppercase tracking-wide mt-1">
                   Años de Experiencia
                 </p>
@@ -65,7 +75,7 @@ export default function Philosophy() {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

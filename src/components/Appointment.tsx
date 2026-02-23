@@ -1,4 +1,6 @@
 'use client';
+import { motion } from 'framer-motion';
+
 interface ContactItemProps {
   icon: React.ReactNode;
   title: string;
@@ -38,7 +40,13 @@ export default function Appointment() {
         }}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <motion.div
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.9, ease: 'easeOut' }}
+        viewport={{ once: true, amount: 0.2 }}
+      >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           {/* Left Info */}
           <div>
@@ -46,7 +54,7 @@ export default function Appointment() {
               Visitanos
             </span>
             <h2 className="text-4xl md:text-5xl font-serif mb-6 leading-tight">
-              Reserva tu <br /> 
+              Reserva tu <br />
               consulta privada
             </h2>
             <p className="text-gray-400 mb-8 text-lg font-light leading-relaxed">
@@ -84,9 +92,6 @@ export default function Appointment() {
                 lines={['Lun - Sab: 9:00 - 21:00', 'Dom: 10:00 - 16:00']}
               />
             </div>
-
-            
-            
           </div>
 
           {/* Right Form */}
@@ -172,7 +177,7 @@ export default function Appointment() {
             </form>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
