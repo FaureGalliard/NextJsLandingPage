@@ -1,5 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 interface SectionProps {
   title: string;
@@ -36,6 +38,8 @@ const purposes = [
 
 export default function PoliticaPrivacidad() {
   return (
+     <>
+    <Navbar />
     <section className="py-16 bg-white min-h-screen">
       <motion.div
         className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"
@@ -202,5 +206,7 @@ export default function PoliticaPrivacidad() {
         </div>
       </motion.div>
     </section>
+    <Footer />
+    </>
   );
 }

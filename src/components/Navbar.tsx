@@ -41,10 +41,10 @@ const BagIcon = () => (
 
 const navLinks = [
   { href: '#inicio', label: 'Inicio' },
-  { href: '#servicios', label: 'Servicios' },
-  { href: '#nosotros', label: 'Nosotros' },
-  { href: '#contacto', label: 'Contacto' },
-  { href: '#journal', label: 'Journal' },
+  { href: '#services', label: 'Servicios' },
+  { href: '#philosophy', label: 'Nosotros' },
+  { href: '#appointment', label: 'Contacto' },
+  
 ];
 
 export default function Navbar() {
@@ -76,7 +76,7 @@ export default function Navbar() {
           {/* Logo */}
           <div className="shrink-0 flex items-center justify-center flex-1 md:flex-none md:justify-start">
             <Link
-              href="#"
+              href="/"
               className="font-inter text-2xl tracking-tight flex items-center gap-2"
             >
               <span className="text-black text-lg">

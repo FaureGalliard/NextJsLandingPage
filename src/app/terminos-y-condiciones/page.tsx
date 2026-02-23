@@ -1,6 +1,8 @@
 'use client';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 interface SectionProps {
   number?: string;
@@ -48,6 +50,8 @@ export default function TerminosCondiciones() {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
+     <>
+    <Navbar />
     <section className="py-16 bg-white min-h-screen">
       <motion.div
         className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
@@ -415,5 +419,7 @@ export default function TerminosCondiciones() {
         </div>
       </motion.div>
     </section>
+    <Footer />
+    </>
   );
 }

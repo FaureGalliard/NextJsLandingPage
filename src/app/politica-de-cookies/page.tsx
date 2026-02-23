@@ -1,6 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
-
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 interface SectionProps {
   title: string;
   children: React.ReactNode;
@@ -19,7 +20,9 @@ function Section({ title, children }: SectionProps) {
 
 export default function PoliticaCookies() {
   return (
-    <section className="py-16 bg-white min-h-screen">
+     <>
+     <Navbar />
+     <section className="py-16 bg-white min-h-screen">
       <motion.div
         className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"
         initial={{ opacity: 0 }}
@@ -163,5 +166,7 @@ export default function PoliticaCookies() {
         </div>
       </motion.div>
     </section>
+    <Footer />
+    </>
   );
 }
