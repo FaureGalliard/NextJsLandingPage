@@ -109,7 +109,7 @@ export default function BespokeProcess() {
   ref={sectionRef}
   className="py-12 bg-white overflow-hidden"
 >
-  <motion.d
+  <motion.div
     className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
     initial={{ opacity: 0 }}
     whileInView={{ opacity: 1 }}
@@ -221,7 +221,7 @@ export default function BespokeProcess() {
 
         </div>
       </div>
-    </motion.d>
+    </motion.div>
     </section>
   );
 }
