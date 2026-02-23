@@ -1,5 +1,5 @@
 'use client';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 
@@ -30,50 +30,164 @@ function ContactItem({ icon, title, lines }: ContactItemProps) {
   );
 }
 
+type ButtonStatus = 'idle' | 'loading' | 'success' | 'error';
+
+function businessEmailHtml(
+  first_name: string, last_name: string, email: string,
+  service_type: string, dateValue: string, timeValue: string, message: string
+) {
+  return `
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"/></head>
+<body style="margin:0;padding:0;background:#f4f4f5;font-family:'Helvetica Neue',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:40px 0;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
+        <tr>
+          <td style="background:#000;padding:32px 40px;">
+            <p style="margin:0;color:#d4a017;font-size:11px;letter-spacing:4px;text-transform:uppercase;font-weight:600;">Nueva Solicitud</p>
+            <h1 style="margin:10px 0 0;color:#fff;font-size:22px;font-weight:700;">${first_name} ${last_name} ha reservado una cita</h1>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:36px 40px;">
+            <table width="100%" cellpadding="0" cellspacing="0" style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;">
+              <tr><td style="padding:20px 24px;">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr><td style="padding:8px 0;border-bottom:1px solid #e5e7eb;">
+                    <span style="color:#6b7280;font-size:12px;text-transform:uppercase;letter-spacing:1px;">Cliente</span><br/>
+                    <strong style="color:#111827;font-size:15px;">${first_name} ${last_name}</strong>
+                  </td></tr>
+                  <tr><td style="padding:8px 0;border-bottom:1px solid #e5e7eb;">
+                    <span style="color:#6b7280;font-size:12px;text-transform:uppercase;letter-spacing:1px;">Email</span><br/>
+                    <a href="mailto:${email}" style="color:#000;font-size:15px;font-weight:600;">${email}</a>
+                  </td></tr>
+                  <tr><td style="padding:8px 0;border-bottom:1px solid #e5e7eb;">
+                    <span style="color:#6b7280;font-size:12px;text-transform:uppercase;letter-spacing:1px;">Servicio</span><br/>
+                    <strong style="color:#111827;font-size:15px;">${service_type}</strong>
+                  </td></tr>
+                  <tr><td style="padding:8px 0;border-bottom:1px solid #e5e7eb;">
+                    <span style="color:#6b7280;font-size:12px;text-transform:uppercase;letter-spacing:1px;">Fecha y Hora</span><br/>
+                    <strong style="color:#111827;font-size:15px;">${dateValue} a las ${timeValue}</strong>
+                  </td></tr>
+                  <tr><td style="padding:8px 0;">
+                    <span style="color:#6b7280;font-size:12px;text-transform:uppercase;letter-spacing:1px;">Mensaje</span><br/>
+                    <span style="color:#374151;font-size:15px;">${message || 'Sin mensaje'}</span>
+                  </td></tr>
+                </table>
+              </td></tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#f9fafb;border-top:1px solid #e5e7eb;padding:20px 40px;text-align:center;">
+            <p style="margin:0;color:#9ca3af;font-size:12px;">Generado automaticamente desde sastreriamarcels.vercel.app</p>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
+
 export default function Appointment() {
-  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<ButtonStatus>('idle');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
+    setStatus('loading');
 
     const form = new FormData(e.currentTarget);
-    const dateValue = form.get('date') as string;
-    const timeValue = form.get('time') as string;
+    const first_name   = form.get('first_name') as string;
+    const last_name    = form.get('last_name') as string;
+    const email        = form.get('email') as string;
+    const service_type = form.get('service_type') as string;
+    const dateValue    = form.get('date') as string;
+    const timeValue    = form.get('time') as string;
+    const message      = (form.get('message') as string) || '';
 
-    // Combina fecha + hora en un timestamp ISO para Supabase (columna timestamptz)
     const appointmentDatetime =
       dateValue && timeValue
         ? new Date(`${dateValue}T${timeValue}:00`).toISOString()
         : null;
 
-    const data = {
-      first_name: form.get('first_name'),
-      last_name: form.get('last_name'),
-      email: form.get('email'),
-      service_type: form.get('service_type'),
+    // 1️⃣ Guardar en Supabase
+    const { error } = await supabase.from('appointments').insert([{
+      first_name,
+      last_name,
+      email,
+      service_type,
       appointment_datetime: appointmentDatetime,
-      message: form.get('message') || null,
+      message: message || null,
       created_at: new Date().toISOString(),
-    };
-
-    const { error } = await supabase.from('appointments').insert([data]);
+    }]);
 
     if (error) {
-      alert('Ocurrio un error al guardar la cita: ' + error.message);
-    } else {
-      alert('Cita guardada! Nos pondremos en contacto pronto.');
-      (e.target as HTMLFormElement).reset();
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 3000);
+      return;
     }
 
-    setLoading(false);
+    // 2️⃣ Enviar correo solo a la empresa
+    await fetch('/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        to: 'sastreria.marcels.pe@gmail.com',
+        subject: `Nueva cita: ${first_name} ${last_name} - ${dateValue} ${timeValue}`,
+        html: businessEmailHtml(first_name, last_name, email, service_type, dateValue, timeValue, message),
+      }),
+    });
+
+    setStatus('success');
+    (e.target as HTMLFormElement).reset();
+    setTimeout(() => setStatus('idle'), 3000);
   };
 
   const today = new Date().toISOString().split('T')[0];
 
+  const buttonConfig = {
+    idle: {
+      bg: 'bg-black hover:bg-gray-800',
+      label: 'Confirmar Solicitud',
+      icon: null,
+    },
+    loading: {
+      bg: 'bg-black',
+      label: 'Enviando...',
+      icon: (
+        <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+        </svg>
+      ),
+    },
+    success: {
+      bg: 'bg-green-500',
+      label: 'Reserva Confirmada',
+      icon: (
+        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      ),
+    },
+    error: {
+      bg: 'bg-red-500',
+      label: 'Hubo un Problema',
+      icon: (
+        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      ),
+    },
+  };
+
+  const current = buttonConfig[status];
+
   return (
     <section id="appointment" className="py-24 bg-black text-white relative overflow-hidden">
-      {/* Background dot pattern */}
       <div
         className="absolute inset-0 opacity-10 pointer-events-none"
         style={{
@@ -138,7 +252,6 @@ export default function Appointment() {
           <div className="bg-white text-black p-8 md:p-10 rounded-xl shadow-2xl">
             <h3 className="text-2xl font-serif font-bold mb-6">Solicitar Cita</h3>
             <form onSubmit={handleSubmit}>
-
               {/* Nombre + Apellido */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
@@ -202,8 +315,6 @@ export default function Appointment() {
                     </div>
                   </div>
                 </div>
-
-                {/* Fecha */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Fecha</label>
                   <input
@@ -247,13 +358,37 @@ export default function Appointment() {
                 />
               </div>
 
-              <button
+              {/* Botón con animación de estado */}
+              <motion.button
                 type="submit"
-                disabled={loading}
-                className="w-full bg-black text-white font-medium py-4 rounded-lg hover:bg-gray-800 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none"
+                disabled={status !== 'idle'}
+                animate={{
+                  scale: status === 'success' || status === 'error' ? [1, 1.03, 1] : 1,
+                }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
+                className={`
+                  w-full text-white font-medium py-4 rounded-lg shadow-lg
+                  flex items-center justify-center gap-2
+                  transition-colors duration-500
+                  disabled:cursor-not-allowed
+                  ${current.bg}
+                `}
               >
-                {loading ? 'Guardando...' : 'Confirmar Solicitud'}
-              </button>
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={status}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex items-center gap-2"
+                  >
+                    {current.icon}
+                    {current.label}
+                  </motion.span>
+                </AnimatePresence>
+              </motion.button>
+
               <p className="text-xs text-gray-500 mt-4 text-center">
                 Nos pondremos en contacto contigo para confirmar tu cita.
               </p>
