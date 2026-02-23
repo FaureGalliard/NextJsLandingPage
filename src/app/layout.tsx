@@ -48,8 +48,10 @@ export default function RootLayout({
   );
 }
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sastreria-marcels.vercel.app"), // cambia por tu dominio real
-
+  metadataBase: new URL("https://sastreria-marcels.vercel.app"), 
+  verification: {
+    google: "3oDfXz27lgptJu7s2CMqmH2f83nNdjIE3RDA__FDtyY", 
+  },
   title: {
     default: "Sastrería Marcel's | Confección a Medida en Callao",
     template: "%s | Sastrería Marcel's",
@@ -97,7 +99,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/public/og-image.jpg", // crea esta imagen en public/
+        url: "/public/og-image.jpg", 
         width: 1200,
         height: 630,
         alt: "Sastrería Marcel's - Confección a Medida",
