@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧵 Sastrería Marcel's – Sistema Web de Gestión de Citas
 
-## Getting Started
+Sistema web fullstack desarrollado para digitalizar la presencia online y la gestión de citas de un negocio local real. Actualmente en producción y en uso por el cliente.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Descripción
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Aplicación que combina una landing page pública orientada a conversión con un panel administrativo privado para gestión de citas.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Presencia online del negocio con información y servicios
+- Contacto directo vía WhatsApp con mensaje preconfigurado
+- Panel administrativo protegido para gestión de citas
+- Autenticación segura con persistencia en base de datos remota
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🏗 Arquitectura
 
-To learn more about Next.js, take a look at the following resources:
+### Frontend Público
+- Landing page con secciones informativas y de servicios
+- Animaciones con Framer Motion
+- Botón flotante de WhatsApp con mensaje personalizado
+- Diseño responsive optimizado para conversión
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Panel Administrativo (`/dashboard`)
+- Ruta protegida mediante middleware
+- Autenticación con Supabase Auth
+- Gestión de citas con persistencia en base de datos
+- Acceso exclusivo para el administrador
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🛠 Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Tecnología | Uso |
+|---|---|
+| Next.js (App Router) | Framework fullstack |
+| Supabase | Auth + PostgreSQL |
+| Tailwind CSS | Estilos |
+| Framer Motion | Animaciones |
+| Vercel | Deploy |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🔐 Seguridad
+
+- Autenticación con Supabase Auth
+- Middleware en `src/middleware.ts` para protección de rutas
+- Redirección automática a `/login` si no hay sesión activa
+- Variables de entorno para credenciales
+
+---
+
+## 🔮 Mejoras Futuras
+
+- Roles de usuario (admin / empleado)
+- Estados de citas (pendiente / confirmada / cancelada)
+- Notificaciones automáticas
+- Métricas del negocio
+- Arquitectura multi-negocio (SaaS)
+
+---
+
+## 👨‍💻 Autor
+
+**Ángel Gabriel Crispín Valdivia**  
+Estudiante de Ingeniería de Software y Estadística  
+Interesado en desarrollo fullstack, arquitectura de sistemas y digitalización de negocios.
+
+---
+
+## 📌 Estado
+
+🟢 En producción · 🟢 Cliente real · 🟢 Proyecto activo
